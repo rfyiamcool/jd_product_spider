@@ -1,28 +1,35 @@
-pider)
+# 项目名: `jd_spider`
 
-###爬虫表的设计:
+
+### 爬虫表的设计:
 
 *设计宗旨, 怎么简单怎么来!*
 
-###初始化程序:
+### 初始化程序:
 
 1. 更改配置
+
 `vim config.py`
 
 2. 自动初始化库表
+
 `python models.py`
 
 3. 启动爬虫
+
 `python spider`
 
 4. 启动数据清理
+
 `python extractor.py`
 
-`架构图`
-
+#### 架构图
+*缺少一个图，后期补上...*
+```
 push url ---> redis (urls task) ---> spider ---> redis (urls result) --->  extractor --->  mysql
                      |                                                           |
                      ------------------------------------------------------------|
+```
 
 `京东所有的品类都是三层.`
 
@@ -40,8 +47,6 @@ class Product(Model):
     extra = BlobField()
     created_on = DateTimeField(default=datetime.now)
 ```
-//京东配送  +  &page=1&delivery=1&trans=1&JL=4_10_0#J_main
-
 
 **关联表**
 
@@ -91,21 +96,3 @@ http://channel.jd.com/kitchenware.html`
 
 
 ------
-
-#### 存在的问题: 
-
-**类别的层级要存几层 ？ 咱们的tag就做了一个关联 !**
-
-厨具 > 刀剪菜板 > 菜刀 >  十八子作 > 十八子作菜刀
-
-厨具 > 刀剪菜板 > 砧板 >  三月三 > 三月三砧板
-
-厨具 > 烹饪锅具 > 炒锅 >  苏泊尔（SUPOR） > 苏泊尔无油烟不粘炒锅
-
-
-**列表页是否需要指定【京东配送]**
-
-选择借助京东配置来介绍重复商品的抓取 (京东自营有苏泊尔，其他几个小贩也卖苏泊尔)
-
-
-
