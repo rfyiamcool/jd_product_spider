@@ -75,13 +75,29 @@ class Category(Model):
 
 ```
 
+### 说明:
 
+该项目没有做深层次递归抓取，所以说需要构建一批索引页的，那么什么索引页？如下...
+
+某个商品类别的索引页:
+http://list.jd.com/list.html?cat=6196,6197,6201
+
+如果需要翻页，需要加page及排序参数:
+
+&page=2&sort=sort_totalsales15_desc&trans=1&JL=6_0_0#J_main
+
+最后生成索引页的逻辑:
+```
+for page in range(1, 10):
+    url = "http://list.jd.com/list.html?cat=6196,6197,6201&page={0}&sort=sort_totalsales15_desc&trans=1&JL=6_0_0#J_main".format(page)
+    push_mq(url)
+```
 
 ### 抓取的流程:
 ### step: 1
 首先把厨具类的子类给拿出来,这些url可以作为后面的种子索引页面.
 
-http://channel.jd.com/kitchenware.html`
+http://channel.jd.com/kitchenware.html
 
 ### step: 2
 通过种子可以拿到相关产品的列表页.
